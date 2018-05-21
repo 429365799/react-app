@@ -1,3 +1,14 @@
 {
-    
+    "presets": [
+        [
+            "env",
+            {
+                "targets": {
+                    "esmodules": true
+                }
+            }
+        ],
+
+        "stage-3"
+    ]
 }
