@@ -71,10 +71,12 @@ const app = next({ dev: conf.mode === conf.SERVER_MODES.DEV })
         const handle = app.getRequestHandler()
         await app.prepare()
 
-        server.get('/p/:id', (req, res, next) => {
-            app.render(req, res, '/post', {
+        server.get('/p/:id', async (req, res, next) => {
+            const html = await app.renderToHTML(req, res, '/post', {
                 title: req.params.id
             })
+
+            res.status(200).send(html)
         })
 
         server.get('*', (req, res) => {
@@ -82,7 +84,7 @@ const app = next({ dev: conf.mode === conf.SERVER_MODES.DEV })
         })
     } catch (error) {
         console.error(error)
-        process.exit(1)   
+        process.exit(1)
     }
     
     // 启动配置
