@@ -1,5 +1,6 @@
 import 'babel-polyfill'
 import express from 'express'
+import path from 'path'
 import next from 'next'
 import exphbs from 'express-handlebars'
 import bodyParser from 'body-parser'
@@ -7,6 +8,9 @@ import cookieParser from 'cookie-parser'
 import Multer from 'multer'
 import logger from 'morgan'
 import helmet from 'helmet'
+
+// components
+import routes from './middlewares/route'
 
 import conf from './configs/conf'
 
@@ -71,13 +75,7 @@ const app = next({ dev: conf.mode === conf.SERVER_MODES.DEV })
         const handle = app.getRequestHandler()
         await app.prepare()
 
-        server.get('/p/:id', async (req, res, next) => {
-            const html = await app.renderToHTML(req, res, '/post', {
-                title: req.params.id
-            })
-
-            res.status(200).send(html)
-        })
+        server.use(routes(path.resolve(path.join(__dirname, './routes'))));
 
         server.get('*', (req, res) => {
             return handle(req, res)
@@ -107,3 +105,7 @@ const app = next({ dev: conf.mode === conf.SERVER_MODES.DEV })
     
     server.listen(...serverOptions)
 })();
+
+export {
+    app
+}
