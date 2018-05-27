@@ -7,6 +7,11 @@ export default class Post extends Component {
     static propTypes = {
     }
 
+    componentDidMount() {
+        console.log(this.props);
+    }
+    
+
     render() {
         return (
             <div className="post-container">
