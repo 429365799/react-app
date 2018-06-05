@@ -1,4 +1,5 @@
-import { app } from '../startup'
+import request from 'request';
+import { app } from '../server'
 
 export default [
     ['GET', '/user/a', (_, __, next) => {next()}, (req, res, next) => {
@@ -12,5 +13,14 @@ export default [
         })
 
         res.status(200).send(html)
-    }]
+    }],
+
+    ['GET', '/source-proxy', (req, res, next) => {
+        let url = req.query.url
+        url = decodeURIComponent(url)
+
+        request({
+            url,
+        }).pipe(res);
+    }],
 ]

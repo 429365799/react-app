@@ -1,0 +1,49 @@
+.post-container {
+    font-size: 34px;
+    color: greenyellow;
+
+    .bg-image {
+        width: 300px;
+        height: 200px;
+        background-image: url('./image.jpg');
+        animation: anim 6s ease infinite alternate both;
+    }
+
+    .video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(-500%, -500%);
+    }
+
+    .btn-group {
+        padding: 30px;
+
+        button {
+            padding: 20px;
+            font-size: 30px;
+        }
+    }
+
+    .canvas {
+        background-color: antiquewhite
+    }
+}
+
+@keyframes anim {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 100% 0;
+    }
+
+    75% {
+        background-position: 0 100%;
+    }
+
+    100% {
+        background-position: 100% 100%;
+    }
+}

@@ -15,5 +15,5 @@ export default {
     /** 是否开启服务端渲染 */
     ssr: true,
     /** 静态文件路径 */
-    staticRoot: path.resolve(path.join(__dirname, '../../public/'))
+    staticRoot: path.resolve(path.join(__dirname, '../../build'))
 }

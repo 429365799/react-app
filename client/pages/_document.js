@@ -2,8 +2,15 @@ import Document, { Head, Main, NextScript } from 'next/document'
 
 export default class MyDocument extends Document {
 
+    static async getInitialProps(ctx) {
+        const initialProps = await Document.getInitialProps(ctx)
+        return { ...initialProps }
+    }
 
     render() {
+        const { assetPrefix, buildId } = this.props.__NEXT_DATA__;
+        const cssPath = process.env.NODE_ENV === 'production' ? `${assetPrefix}/app-${buildId}.css` : `/app.css`;        // ``
+
         return (
             <html>
                 <Head>
@@ -14,11 +21,13 @@ export default class MyDocument extends Document {
                     <meta name="keyword" content="" />
 
                     {/* styles */}
-                    <link rel="stylesheet" href="/_next/static/style.css" />
+                    <link rel="stylesheet" href={ cssPath } />
                 </Head>
                 <body>
                     <Main />
                     <NextScript />
+
+                    {/* <script type="text/javascript" src="https://res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/2.5.1/vconsole.min.js"></script> */}
                 </body>
             </html>
         )

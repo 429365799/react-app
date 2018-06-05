@@ -1,2 +1,3 @@
 require('babel-register');
-require('./startup.js');
+require('../client/tools/eject-reducers')
+require('./server.js');

@@ -14,8 +14,12 @@ import routes from './middlewares/route'
 
 import conf from './configs/conf'
 
+// conf.mode = conf.SERVER_MODES.PROD
 const server = express()
-const app = next({ dev: conf.mode === conf.SERVER_MODES.DEV })
+const app = next({
+    dev: conf.mode === conf.SERVER_MODES.DEV,
+    dir: path.resolve(path.join(__dirname, '../client')),
+})
 
 /**
  * 启动服务器
@@ -59,7 +63,7 @@ const app = next({ dev: conf.mode === conf.SERVER_MODES.DEV })
     // xssFilter?: boolean,
     // expectCt?: boolean,
     server.use(helmet())
-    
+    console.log(conf.staticRoot);
     // static
     server.use(express.static(conf.staticRoot, {
         maxAge: conf.mode === 'prod' ? 30 * 24 * 3600 * 1000 : 0,
@@ -75,11 +79,9 @@ const app = next({ dev: conf.mode === conf.SERVER_MODES.DEV })
         const handle = app.getRequestHandler()
         await app.prepare()
 
-        server.use(routes(path.resolve(path.join(__dirname, './routes'))));
+        server.use(routes(path.resolve(path.join(__dirname, './routes'))))
 
-        server.get('*', (req, res) => {
-            return handle(req, res)
-        })
+        server.get('*', handle)
     } catch (error) {
         console.error(error)
         process.exit(1)
