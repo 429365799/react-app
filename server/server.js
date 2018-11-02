@@ -79,7 +79,8 @@ const app = next({
         const handle = app.getRequestHandler()
         await app.prepare()
 
-        server.use(routes(path.resolve(path.join(__dirname, './routes'))))
+        const routePath = path.resolve(path.join(__dirname, './routes'))
+        server.use(routes(routePath))
 
         server.get('*', handle)
     } catch (error) {
